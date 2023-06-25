@@ -3,12 +3,16 @@ package gui.util;
 import java.util.Date;
 import java.util.Locale;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.util.StringConverter;
 
 public class Utils {
 
@@ -17,6 +21,7 @@ public class Utils {
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
 
+	// Método para transformar uma string em um numero inteiro//
 	public static Integer tryParseToInt(String str) {
 		try {
 			return Integer.parseInt(str);
@@ -25,6 +30,7 @@ public class Utils {
 		}
 	}
 
+	// Método para formatar uma data passada//
 	public static <T> void formatTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Date> cell = new TableCell<T, Date>() {
@@ -44,6 +50,7 @@ public class Utils {
 		});
 	}
 
+	// Método para formatar o salario de um seller//
 	public static <T> void formatTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Double> cell = new TableCell<T, Double>() {
@@ -59,6 +66,35 @@ public class Utils {
 				}
 			};
 			return cell;
+		});
+	}
+
+	//Método para formatar o datePicker//
+	public static void formatDatePicker(DatePicker datePicker, String format) {
+		datePicker.setConverter(new StringConverter<LocalDate>() {
+
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
+			{
+				datePicker.setPromptText(format.toLowerCase());
+			}
+
+			@Override
+			public String toString(LocalDate date) {
+				if (date != null) {
+					return dateFormatter.format(date);
+				} else {
+					return "";
+				}
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				if (string != null && !string.isEmpty()) {
+					return LocalDate.parse(string, dateFormatter);
+				} else {
+					return null;
+				}
+			}
 		});
 	}
 

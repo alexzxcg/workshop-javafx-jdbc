@@ -82,6 +82,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 
 	}
 
+	//Método para atualizar a tela//
 	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Service was null");
@@ -93,6 +94,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		initRemoveButtons();
 	}
 
+	//Método que cria a tela de formulario para cadastrar um novo departamento//
 	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -121,7 +123,8 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	public void onDataChanged() {
 		updateTableView();
 	}
-
+	
+	//Método que cria botões para editar um departamento//
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEDIT.setCellFactory(param -> new TableCell<Department, Department>() {
@@ -141,6 +144,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 		});
 	}
 
+	//Método que cria botões para remover um departamento//
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Department, Department>() {
@@ -158,6 +162,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			}
 		});
 	}
+	//Método para remover o departamento do banco de dados, após ser confirmado pelo usuario//
 	private void removeEntity(Department obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
 		
