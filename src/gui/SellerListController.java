@@ -70,7 +70,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		Seller obj = new Seller();
-		//createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
+		createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
 	}
 
 	@Override
@@ -104,11 +104,11 @@ public class SellerListController implements Initializable, DataChangeListener {
 		List<Seller> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewSeller.setItems(obsList);
-		//initEditButtons();
+		initEditButtons();
 		initRemoveButtons();
 	}
 
-	/*private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
+	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
@@ -130,14 +130,14 @@ public class SellerListController implements Initializable, DataChangeListener {
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
-	}*/
+	}
 
 	@Override
 	public void onDataChanged() {
 		updateTableView();
 	}
 
-	/*private void initEditButtons() {
+	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEDIT.setCellFactory(param -> new TableCell<Seller, Seller>() {
 			private final Button button = new Button("edit");
@@ -154,7 +154,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 						event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
 			}
 		});
-	}*/
+	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
